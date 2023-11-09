@@ -4,17 +4,17 @@ import "time"
 
 func NewHeater() *Heater {
 	return &Heater{
-		PowerLed: NewPowerLed(),
+		powerLed: newPowerLed(),
 	}
 }
 
 type Heater struct {
-	*PowerLed
+	*powerLed
 }
 
 func (h *Heater) Run() {
 	for {
-		h.PowerLed.activate()
+		h.powerLed.activate()
 		h.uploadState()
 		time.Sleep(time.Second)
 	}

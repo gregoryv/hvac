@@ -1,19 +1,19 @@
 package hvac
 
-func NewPowerLed() *PowerLed {
-	return &PowerLed{
+func newPowerLed() *powerLed {
+	return &powerLed{
 		led: make(chan struct{}),
 	}
 }
 
-type PowerLed struct {
+type powerLed struct {
 	led chan struct{}
 }
 
-func (h *PowerLed) Running() <-chan struct{} {
+func (h *powerLed) Running() <-chan struct{} {
 	return h.led
 }
 
-func (h *PowerLed) activate() {
+func (h *powerLed) activate() {
 	close(h.led)
 }

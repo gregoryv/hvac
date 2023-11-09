@@ -4,18 +4,18 @@ import "time"
 
 func NewVent() *Vent {
 	return &Vent{
-		PowerLed: NewPowerLed(),
+		powerLed: newPowerLed(),
 	}
 }
 
 type Vent struct {
-	*PowerLed
+	*powerLed
 }
 
 // Callers can only call Run once on a instance.
 func (h *Vent) Run() {
 	for {
-		h.PowerLed.activate()
+		h.powerLed.activate()
 		h.uploadState()
 		time.Sleep(time.Second)
 	}
