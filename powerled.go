@@ -17,3 +17,7 @@ func (h *powerLed) Running() <-chan struct{} {
 func (h *powerLed) activate() {
 	close(h.led)
 }
+
+func (h *powerLed) deactivate() {
+	h.led = make(chan struct{})
+}

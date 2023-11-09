@@ -1,20 +1,29 @@
 package hvac
 
 import (
+	"context"
 	"testing"
 	"time"
 )
 
+func TestHeater_RunCanBeStopped(t *testing.T) {
+	h := NewHeater()
+
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+
+	go cancel()
+
+	h.Run(ctx)
+	t.Log("stopped")
+}
+
 func TestHeater_Run(t *testing.T) {
 	h := NewHeater()
 
-	go h.Run()
+	ctx := context.Background()
+	go h.Run(ctx)
 
-	/*
-			   Test routine               Run routine
-		                         chan
-		                   <-  ========
-	*/
 	select {
 	case <-h.Running():
 		// ok

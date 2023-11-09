@@ -1,6 +1,9 @@
 package hvac
 
-import "time"
+import (
+	"context"
+	"time"
+)
 
 func NewHeater() *Heater {
 	return &Heater{
@@ -12,11 +15,17 @@ type Heater struct {
 	*powerLed
 }
 
-func (h *Heater) Run() {
+func (h *Heater) Run(ctx context.Context) {
+	h.powerLed.activate()
+	defer h.powerLed.deactivate()
+
 	for {
-		h.powerLed.activate()
 		h.uploadState()
-		time.Sleep(time.Second)
+		select {
+		case <-ctx.Done():
+			return
+		case <-time.After(time.Second):
+		}
 	}
 }
 
