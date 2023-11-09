@@ -15,10 +15,15 @@ type Heater struct {
 func (h *Heater) Run() {
 	for {
 		close(h.running)
+		h.uploadState()
 		time.Sleep(time.Second)
 	}
 }
 
 func (h *Heater) Running() <-chan struct{} {
 	return h.running
+}
+
+func (h *Heater) uploadState() {
+
 }
