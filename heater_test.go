@@ -1,8 +1,18 @@
 package hvac
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestHeater_Run(t *testing.T) {
-	var h Heater
-	h.Run()
+	h := NewHeater()
+
+	go h.Run()
+
+	/*
+			   Test routine               Run routine
+		                         chan
+		                   <-  ========
+	*/
+	<-h.Running()
 }

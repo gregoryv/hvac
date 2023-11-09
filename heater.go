@@ -1,7 +1,24 @@
 package hvac
 
-type Heater struct{}
+import "time"
+
+func NewHeater() *Heater {
+	return &Heater{
+		running: make(chan struct{}),
+	}
+}
+
+type Heater struct {
+	running chan struct{}
+}
 
 func (h *Heater) Run() {
-	_ = 1
+	for {
+		time.Sleep(time.Second)
+		close(h.running)
+	}
+}
+
+func (h *Heater) Running() <-chan struct{} {
+	return h.running
 }
