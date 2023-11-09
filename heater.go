@@ -4,26 +4,20 @@ import "time"
 
 func NewHeater() *Heater {
 	return &Heater{
-		running: make(chan struct{}),
+		PowerLed: NewPowerLed(),
 	}
 }
 
 type Heater struct {
-	running chan struct{}
+	*PowerLed
 }
 
 func (h *Heater) Run() {
 	for {
-		close(h.running)
+		h.PowerLed.activate()
 		h.uploadState()
 		time.Sleep(time.Second)
 	}
 }
 
-func (h *Heater) Running() <-chan struct{} {
-	return h.running
-}
-
-func (h *Heater) uploadState() {
-
-}
+func (h *Heater) uploadState() {}
