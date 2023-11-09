@@ -14,8 +14,8 @@ type Heater struct {
 
 func (h *Heater) Run() {
 	for {
-		time.Sleep(time.Second)
 		close(h.running)
+		time.Sleep(time.Second)
 	}
 }
 

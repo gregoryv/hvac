@@ -2,6 +2,7 @@ package hvac
 
 import (
 	"testing"
+	"time"
 )
 
 func TestHeater_Run(t *testing.T) {
@@ -14,5 +15,11 @@ func TestHeater_Run(t *testing.T) {
 		                         chan
 		                   <-  ========
 	*/
-	<-h.Running()
+	select {
+	case <-h.Running():
+		// ok
+		t.Log("ok")
+	case <-time.After(10 * time.Millisecond):
+		t.Error("too slow")
+	}
 }
